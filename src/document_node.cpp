@@ -26,10 +26,10 @@ spell::node::~node()
 std::string spell::node::get_text(int indent_level, int indent_size)
 {
     std::string text =
-	"\n" + std::string(indent_size * indent_level, ' ') + opening_tag();
+	std::string(indent_size * indent_level, ' ') + opening_tag();
     for (auto child=children.begin(); child != children.end(); child++)
-	text += (*child)->get_text(indent_level + 1, indent_size);
-    text += closing_tag() + "\n";
+	text += "\n" + (*child)->get_text(indent_level + 1, indent_size);
+    text += "\n" + std::string(indent_size * indent_level, ' ') + closing_tag();
     return text;
 }
 
@@ -91,7 +91,7 @@ spell::text_node::text_node(std::string text) : node("", "", {}, {}), text(text)
 
 std::string spell::text_node::get_text(int indent_level, int indent_size)
 {
-    return text;
+    return std::string(indent_level * indent_size, ' ') + text;
 }
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
