@@ -4,11 +4,12 @@
 
 int main(int argc, char** argv)
 {
-    spell::node root("div", "", {},
-		     { new spell::node("h1", "", {}, { new spell::text_node("hello world!") }),
-		       new spell::node("p", "", {},
-				       { new spell::text_node("have a lovely day c:") })
-		     });
-    std::cout << root.get_text(0, 4) << std::endl;
+    spell::node* root = spell::div
+	({ spell::h1("hello, world!"),
+	   spell::p("it's nice to see you again c:")
+	});
+		
+    std::cout << root->get_text(0, 4) << std::endl;
+    delete root;
     return 0;
 }

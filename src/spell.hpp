@@ -44,6 +44,19 @@ namespace spell
 	text_node(std::string text);
 	std::string get_text(int indent_level, int indent_size);
     };
+
+    /* convenience functions */
+    node* text(std::string text);
+    
+#define SPELL_DECLARE_NODE_TYPE(TYPE) \
+    node* TYPE(std::string text); \
+    node* TYPE(node_list children);		    \
+    node* TYPE(std::string id, node_list children); \
+    node* TYPE(std::string id, string_list classes, node_list children);
+
+    SPELL_DECLARE_NODE_TYPE(div)
+    SPELL_DECLARE_NODE_TYPE(p)
+    SPELL_DECLARE_NODE_TYPE(h1)
 }
 
 #endif

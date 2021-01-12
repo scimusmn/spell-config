@@ -93,3 +93,26 @@ std::string spell::text_node::get_text(int indent_level, int indent_size)
 {
     return text;
 }
+
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ *
+ * convenience functions
+ *
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ */
+
+spell::node* spell::text(std::string text) { return new spell::text_node(text); }
+
+#define SPELL_DEFINE_NODE_TYPE(TYPE) \
+    spell::node* spell::TYPE(std::string text) \
+    { return new spell::node(#TYPE, "", {}, { new spell::text_node(text) }); } \
+    spell::node* spell::TYPE(spell::node_list children)		       \
+    { return new spell::node(#TYPE, "", {}, children); }		\
+    spell::node* spell::TYPE(std::string id, spell::node_list children) \
+    { return new spell::node(#TYPE, id, {}, children); }		\
+    spell::node* spell::TYPE(std::string id, spell::string_list classes, spell::node_list children) \
+    { return new spell::node(#TYPE, id, classes, children); }
+
+SPELL_DEFINE_NODE_TYPE(div)
+SPELL_DEFINE_NODE_TYPE(p)
+SPELL_DEFINE_NODE_TYPE(h1)
