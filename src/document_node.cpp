@@ -49,6 +49,25 @@ void spell::node::add_children(std::initializer_list<spell::node*> nodes)
     
 
 
+spell::node* spell::node::get_child_by_id(std::string id, int recursion_level)
+{
+    bool recurse = recursion_level > 0 || recursion_level < 0;
+
+    for (auto child = children.begin(); child != children.end(); child++) {
+	if ((*child)->id == id)
+	    return *child;
+	else if (recurse) {
+	    spell::node* n = (*child)->get_child_by_id(id, recursion_level-1);
+	    if (n != nullptr)
+		return n;
+	}
+    }
+
+    return nullptr;
+}
+
+
+
 std::string spell::node::opening_tag()
 {
     std::string class_str = "";
